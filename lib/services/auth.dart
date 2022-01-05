@@ -1,47 +1,105 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class AuthServie{
+
+  Future<FirebaseApp> initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+    }   
+
   
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String name="";
+  String email= "";
+  String password= "";
   
-  // Creating function to get uid by calling UserModel class
-  UserModel? _userFromFirebaseUser (User user){
-    return UserModel(user.uid);
+  
+
+  // //sign in anonymousely
+  // Future signInAnon() async {
+  //   try{
+  //     UserCredential result = await _auth.signInAnonymously();
+  //     User? user = result.user;
+  //     return user;
+  //   }catch(e){
+  //     print(e.toString());
+  //     return "Some Error in sign in";
+  //   }
+  // }
+  
+
+  //register in with email & password
+  Future<User?> registerUsingEmailPassword({
+    required String name,
+    required String email,
+    required String password,
+    required var phoneNumber,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+      await user!.updateDisplayName(name);
+      // await user.updatePhoneNumber(phoneNumber);
+      await user.sendEmailVerification();
+      
+      
+ 
+      await user.reload();
+      user = auth.currentUser;
+     
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return user;
   }
 
-  // creating user stream
-  Stream<UserModel?> get user{
-    return _auth.authStateChanges()
-    .map((User? user) => _userFromFirebaseUser(user!));
-  }
+  //signin with email & password
+  Future<User?> signInUsingEmailPassword({
+  required String email,
+  required String password,
+  required BuildContext context,
+}) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
 
-  //sign in anonymousely
-  Future signInAnon() async {
-    try{
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      // print(result);
-      return _userFromFirebaseUser(user!);
-    }catch(e){
-      print(e.toString());
-      return "Some Error in sign in";
+  try {
+    UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    user = userCredential.user;
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided.');
     }
   }
-  
 
-  //sign in with email & password
-
-  //register with email & password
+  return user;
+}
 
   //sign out
-Future<void> signOut() async {
-  try{
-    return await _auth.signOut();
+// Future<void> signOut() async {
+//   try{
+//     return await _auth.signOut();
 
-  }catch(e){
-    print(e.toString());
-    return null;
-  }
-}
+//   }catch(e){
+//     print(e.toString());
+//     return null;
+//   }
+// }
+// }
 }

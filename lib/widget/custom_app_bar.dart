@@ -24,19 +24,7 @@ class CustomAppBar extends StatelessWidget {
             child:_buildIcon(leftIcon),
           ),
           GestureDetector(
-            onTap: () async{
-              await _auth.signOut();
-              Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => LoginPage(),
-              ),
-            );
-              print("signour presesed");
-
-            
-              
-              
-            },
+            // j
             child: _buildIcon(rightIcon),),
         ],
       ),

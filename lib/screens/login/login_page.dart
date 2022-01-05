@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/colors.dart';
+import 'package:flutter_application_1/screens/signup/signup.dart';
 import 'package:flutter_application_1/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
@@ -93,10 +94,10 @@ class LoginPage extends StatelessWidget {
                         Text("Forgot Password?", style: TextStyle(color: Colors.grey),),
                         SizedBox(height: 40,),
                         GestureDetector(
-                          onTap: ()async{
-                              dynamic result = await _auth.signInAnon();
-                              print(result.uid);
-                            },
+                          // onTap: ()async{
+                          //     // dynamic result = await _auth.signInAnon();
+                          //     // print(result.uid);
+                          //   },
                           child: Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 50),
@@ -112,15 +113,24 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20,),
-                        Container(
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children:[
-                              Text("Not a member?", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                              Text("Sign up", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),),
-                              ],
-                            )
-                            ),
+                        GestureDetector(
+                          onTap: (){
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => SignUp(),
+                                ),
+                              );
+                            },
+                          child: Container(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:[
+                                Text("Not a member?", style: TextStyle(color: Colors.black, ),),
+                                Text("Sign up", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                                ],
+                              )
+                              ),
+                        ),
                         
 
                         
