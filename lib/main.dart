@@ -12,6 +12,9 @@ import 'package:flutter_application_1/services/auth.dart';
 
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final AuthServie  _auth = AuthServie();
+  await _auth.initializeFirebase();
 
   runApp(MyApp());
 }

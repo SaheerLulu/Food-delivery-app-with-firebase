@@ -190,7 +190,27 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 10,),
+                        GestureDetector(
+                          onTap: (){
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            },
+                          child: Container(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:[
+                                Text("Already a member?", style: TextStyle(color: Colors.black, ),),
+                                Text("Sign in", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                                ],
+                              )
+                              ),
+                        ),
                         SizedBox(height: 30,),
+
                         
                         Text("Sign up with social media", style: TextStyle(color: Colors.grey),),
                         SizedBox(height: 30,),

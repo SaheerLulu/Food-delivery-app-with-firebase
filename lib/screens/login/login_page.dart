@@ -3,9 +3,17 @@ import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/screens/signup/signup.dart';
 import 'package:flutter_application_1/services/auth.dart';
 
-class LoginPage extends StatelessWidget {
-  final AuthServie  _auth = AuthServie();
 
+class LoginPage extends StatefulWidget {
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final AuthServie _auth = AuthServie();
+  String email = "";
+  String password = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +74,10 @@ class LoginPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border(bottom: BorderSide(color: Colors.grey))
                                 ),
-                                child: TextField(
+                                child: TextFormField(
+                                  onChanged: (val){
+                                      setState(()=> email =val);
+                                    },
                                   decoration: InputDecoration(
                                     hintText: "Email or Phone number",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -79,7 +90,10 @@ class LoginPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border(bottom: BorderSide(color: Colors.grey))
                                 ),
-                                child: TextField(
+                                child: TextFormField(
+                                  onChanged: (val){
+                                      setState(()=> password =val);
+                                    },
                                   decoration: InputDecoration(
                                     hintText: "Password",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -87,6 +101,7 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                            
                             ],
                           ),
                         ),
@@ -94,10 +109,10 @@ class LoginPage extends StatelessWidget {
                         Text("Forgot Password?", style: TextStyle(color: Colors.grey),),
                         SizedBox(height: 40,),
                         GestureDetector(
-                          // onTap: ()async{
-                          //     // dynamic result = await _auth.signInAnon();
-                          //     // print(result.uid);
-                          //   },
+                          onTap: ()async{
+                              dynamic result = await _auth.signInUsingEmailPassword(email: email,password: password,context: context);
+                              print(result);
+                            },
                           child: Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 50),
@@ -178,4 +193,7 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
+
 }
+

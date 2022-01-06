@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login/login_page.dart';
 import 'package:flutter_application_1/services/auth.dart';
@@ -24,7 +25,9 @@ class CustomAppBar extends StatelessWidget {
             child:_buildIcon(leftIcon),
           ),
           GestureDetector(
-            // j
+            onTap: ()async{
+              await FirebaseAuth.instance.signOut();
+            },
             child: _buildIcon(rightIcon),),
         ],
       ),
