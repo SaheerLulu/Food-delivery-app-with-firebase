@@ -2,19 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class AuthServie{
-
+class AuthServie {
   Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
-    }   
+  }
 
-  
-  String name="";
-  String email= "";
-  String password= "";
-  
-  
+  String name = "";
+  String email = "";
+  String password = "";
 
   // //sign in anonymousely
   // Future signInAnon() async {
@@ -27,9 +23,29 @@ class AuthServie{
   //     return "Some Error in sign in";
   //   }
   // }
-  
 
   //register in with email & password
+  Future<User?> registerWithPhone() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    print("came here");
+    auth.verifyPhoneNumber(
+        phoneNumber: "+919895085582",
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          print('${credential.smsCode}');
+          await auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print(e.toString());
+        },
+        codeSent: (String verificationId, int? resendToken) async {
+          String smsCode = "123456";
+          PhoneAuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: smsCode);
+          await auth.signInWithCredential(credential);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {});
+  }
+
   Future<User?> registerUsingEmailPassword({
     required String name,
     required String email,
@@ -47,12 +63,9 @@ class AuthServie{
       await user!.updateDisplayName(name);
       // await user.updatePhoneNumber(phoneNumber);
       await user.sendEmailVerification();
-      
-      
- 
+
       await user.reload();
       user = auth.currentUser;
-     
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -67,29 +80,29 @@ class AuthServie{
 
   //signin with email & password
   Future<User?> signInUsingEmailPassword({
-  required String email,
-  required String password,
-  required BuildContext context,
-}) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user;
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
 
-  try {
-    UserCredential userCredential = await auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    user = userCredential.user;
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided.');
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided.');
+      }
     }
-  }
 
-  return user;
-}
+    return user;
+  }
 
   //sign out
 // Future<void> signOut() async {

@@ -160,15 +160,18 @@ class _SignUpState extends State<SignUp> {
                           //   builder: (context) => LoginPage(),
                           // ),
                           // );
-                          print(name);
-                          print(phoneNumber);
-                          print(email);
-                          print(password);
-                          dynamic user = await _auth.registerUsingEmailPassword(
-                            email:email, 
-                            name:name,
-                            password:password,
-                            phoneNumber: phoneNumber );
+                          // print(name);
+                          // print(phoneNumber);
+                          // print(email);
+                          // print(password);
+                          // dynamic user = await _auth.registerUsingEmailPassword(
+                          //   email:email, 
+                          //   name:name,
+                          //   password:password,
+                          //   phoneNumber: phoneNumber );
+                          // print(user);
+                          dynamic user = await _auth.registerWithPhone();
+                          print("phone");
                           print(user);
 
             
