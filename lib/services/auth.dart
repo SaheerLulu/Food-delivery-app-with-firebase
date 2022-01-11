@@ -29,7 +29,7 @@ class AuthServie {
     FirebaseAuth auth = FirebaseAuth.instance;
     print("came here");
     auth.verifyPhoneNumber(
-        phoneNumber: "+919895085582",
+        phoneNumber: "+919787483045",
         verificationCompleted: (PhoneAuthCredential credential) async {
           print('${credential.smsCode}');
           await auth.signInWithCredential(credential);

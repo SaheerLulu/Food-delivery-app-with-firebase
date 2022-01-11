@@ -23,6 +23,21 @@ class Food{
     this.about,
     {this.highLight=false}
   );
+   Map<String,dynamic> toMap(){
+    return{
+      "imageUrl":this.imgUrl,
+      "desc":this.desc,
+      "name":this.name,
+      "waitTime":this.waitTime,
+      "Score":this.Score,
+      "cal":this.cal,
+      "Price":this.price,
+      "quantity":this.quantity,
+      "ingredients":this.ingredients,
+      "about":this.about,
+      "highLight":this.highLight=false
+    };
+  }
 
   static List<Food> generateRecommendFoods(){
     return [
