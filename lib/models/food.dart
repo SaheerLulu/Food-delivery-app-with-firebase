@@ -1,11 +1,11 @@
 class Food{
-  String imgUrl;
+  String imgUrl="";
   String desc;
   String name;
   String waitTime;
   num Score;
   String cal;
-  num price;
+  num price; 
   num quantity;
   List<Map<String, String>> ingredients;
   String about;
@@ -37,6 +37,11 @@ class Food{
       "about":this.about,
       "highLight":this.highLight=false
     };
+  }
+  static Food generateFood(List list){
+    List<Map<String, String>> map =[{"fd":"fds"}];
+    return Food(list[0], list[1], list[2], list[3],  num.parse(list[4])  , list[5], num.parse(list[6]), num.parse(list[7]), map, list[9],highLight: (list[10]=='true')? true: false );
+
   }
 
   static List<Food> generateRecommendFoods(){

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/screens/home/widget/food_items.dart';
 
 class  FoodListView extends StatelessWidget {
   final int selected;
+ 
   final Function callback;
   final PageController pageController;
   final Restaurant restaurant;
@@ -24,17 +25,12 @@ class  FoodListView extends StatelessWidget {
           category.map((e) => ListView.separated(
             padding: EdgeInsets.zero,
             itemBuilder: (context,index) => 
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>DetailPage(restaurant.menu[category[selected]]![index])),
-                );
-              },
-              child: FoodItem(
+            
+              FoodItem(
                 restaurant.menu[category[selected]]![index]
                 ),
-            ), 
-            separatorBuilder: (_,index)=> SizedBox(height:15), 
+            
+            separatorBuilder: (_,index)=> SizedBox(height:10), 
             itemCount: restaurant.menu[category[selected]]!.length)).toList(),
         
         

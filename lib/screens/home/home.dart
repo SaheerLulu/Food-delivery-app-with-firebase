@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
+ 
   var selected =0;
   final restaurant = Restaurant.generateRestaurant();
   final pageController = PageController();
@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
           ),
          Expanded(
            child:FoodListView(
+             
              selected,
              (int index){
                setState(() {

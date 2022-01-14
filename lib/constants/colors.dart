@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color? kBackground = Colors.grey[300];
+Color? kBackground = Colors.grey[100];
 const Color kPrimaryColor = Colors.amberAccent;
 
 const Color loginPageColorTop = Color(0xFFf5d742);
