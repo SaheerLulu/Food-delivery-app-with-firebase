@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final pageController = PageController();
   @override
   Widget build(BuildContext context) {
-    print("home page loaded");
+  
     return Scaffold(
       backgroundColor: kBackground,
       body: Column(

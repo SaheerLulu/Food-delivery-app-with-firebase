@@ -33,9 +33,9 @@ class _WrapperState extends State<Wrapper> {
             print("in wrapper");
           // return LoginPage();
           // return ReadingData();
-          // return HomePage();
+          return HomePage();
           // return DetailPage(food);
-          return AddFood();
+          // return AddFood();
           
           // return AddingData();
           }
