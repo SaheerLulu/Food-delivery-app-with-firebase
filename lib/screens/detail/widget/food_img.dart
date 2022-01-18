@@ -52,7 +52,7 @@ class FoodImg extends StatelessWidget {
                 ),]
               ),
               child: Image.asset(
-                food.imgUrl,
+                food.imgUrl!,
                 fit: BoxFit.cover
               ),
 

@@ -28,7 +28,7 @@ class _FoodItemState extends State<FoodItem> {
             padding: EdgeInsets.all(5),
             width: 110,
             height: 110,
-            child: Image.asset(widget.food.imgUrl, fit: BoxFit.fitHeight),
+            child: Image.asset(widget.food.imgUrl!, fit: BoxFit.fitHeight),
           ),
           Expanded(
             child: Container(
@@ -39,7 +39,7 @@ class _FoodItemState extends State<FoodItem> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.food.name,
+                      Text(widget.food.name!,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -47,9 +47,9 @@ class _FoodItemState extends State<FoodItem> {
                     ],
                   ),
                   Text(
-                    widget.food.desc,
+                    widget.food.desc!,
                     style: TextStyle(
-                      color: widget.food.highLight
+                      color: widget.food.highLight!
                           ? kPrimaryColor
                           : Colors.grey.withOpacity(0.8),
                       height: 1.5,

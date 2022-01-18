@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/models/restaurant.dart';
-import 'package:flutter_application_1/services/adding_data.dart';
+import 'package:flutter_application_1/services/adding_data_test.dart';
 import 'package:flutter_application_1/services/reading_data.dart';
 
 class FoodListTest extends StatelessWidget {

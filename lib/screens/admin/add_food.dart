@@ -3,27 +3,35 @@ import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/models/food.dart';
 import 'package:flutter_application_1/screens/admin/widget/food_image_picker.dart';
 import 'package:flutter_application_1/screens/detail/widget/food_img.dart';
+import 'package:flutter_application_1/services/adding_data_firebase.dart';
+import 'package:toggle_switch/toggle_switch.dart';
+import 'dart:io';
+
 
 
 class AddFood extends StatefulWidget {
   @override
   _AddFoodState createState() => _AddFoodState();
+  
+
 }
 
 class _AddFoodState extends State<AddFood> {
   final _formKey = GlobalKey<FormState>();
-
-  String imgUrl = "";
-  String desc = "";
+  File? image_file;
+ 
   String name = "";
+  String Category = "";
+  String desc = "";
   var price; 
-  String about = "";
-  bool highLight = false;
+  final List<String> _vegOrNon = ['Yes','No'];
+  final food = Food();
+  final DB= AddDataFirebase("food");
+
 
   @override
   Widget build(BuildContext context) {
-    final  foodsp =Food.generateRecommendFoods();
-    Food foodn= foodsp[0];
+    
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -52,7 +60,9 @@ class _AddFoodState extends State<AddFood> {
                 ],
               ),
             ),
-            FoodImgPicker(foodn),
+            FoodImgPicker(image_changed: (image_fil) {
+              image_file=image_fil;
+            },),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -82,7 +92,9 @@ class _AddFoodState extends State<AddFood> {
                                   padding: EdgeInsets.all(10),
                                   decoration: _containerDecoration(),
                                   child: TextFormField(
-                                    onChanged: (val) {},
+                                    onChanged: (val) {
+                                      name = val;
+                                    },
                                     decoration: _textFormDecoration("Name"),
                                   ),
                                 ),
@@ -90,7 +102,9 @@ class _AddFoodState extends State<AddFood> {
                                   padding: EdgeInsets.all(10),
                                   decoration: _containerDecoration(),
                                   child: TextFormField(
-                                    onChanged: (val) {},
+                                    onChanged: (val) {
+                                      desc=val;
+                                    },
                                     decoration:
                                         _textFormDecoration("Description"),
                                   ),
@@ -100,7 +114,9 @@ class _AddFoodState extends State<AddFood> {
                                   padding: EdgeInsets.all(10),
                                   decoration: _containerDecoration(),
                                   child: TextFormField(
-                                    onChanged: (val) {},
+                                    onChanged: (val) {
+                                      price=val;
+                                    },
                                     decoration: _textFormDecoration("Price"),
                                   ),
                                 ),
@@ -109,19 +125,53 @@ class _AddFoodState extends State<AddFood> {
                                   padding: EdgeInsets.all(10),
                                   decoration: _containerDecoration(),
                                   child: TextFormField(
-                                    onChanged: (val) {},
-                                    decoration: _textFormDecoration("About"),
+                                    onChanged: (val) {
+                                      Category=val;
+                                    },
+                                    decoration: _textFormDecoration("Category"),
                                   ),
+                                ),
+                                SizedBox(height: 20,),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  // decoration: _containerDecoration(),
+                                  child:Row(
+                                    children: [
+                                    Text("Veg: ", style: TextStyle(fontSize: 16,
+                                    color: Colors.grey)),
+                                    SizedBox(width: 20,),
+                                    ToggleSwitch(
+                                      activeBgColor: [kPrimaryColor],
+                                      inactiveBgColor: kBackground,
+                                    initialLabelIndex: 0,
+                                    totalSwitches: 2,
+                                    labels: _vegOrNon,
+                                    onToggle: (index){
+                                      print(_vegOrNon[index]);
+                                    },
+                                  
+                                  ),
+                                  ],)
+                                  
                                 ),
                               ],
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
                         GestureDetector(
-                          onTap: () async {},
+                          onTap: () async {
+                            food.imgFile= image_file;
+                            food.name=name;
+                            food.desc =desc;
+                            food.price=num.tryParse(price);
+                            food.about=Category;
+                          DB.add_data(food);
+
+                            
+                          },
                           child: Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 100),

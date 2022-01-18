@@ -13,7 +13,7 @@ class FoodDetail extends StatelessWidget {
       color: kBackground,
       child: Column(children: [
         Text(
-          food.name,
+          food.name!,
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class FoodDetail extends StatelessWidget {
             _buildIconText(
               Icons.access_time_outlined,
               Colors.blue,
-              food.waitTime
+              food.waitTime!
             ),
             _buildIconText(
               Icons.star_outlined,
@@ -37,7 +37,7 @@ class FoodDetail extends StatelessWidget {
             _buildIconText(
               Icons.local_fire_department_outlined,
               Colors.red,
-              food.cal
+              food.cal!
             ),
           ],
         ),
@@ -68,13 +68,13 @@ class FoodDetail extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Image.asset(food.ingredients[index].values.first,width: 52,),
-                  Text(food.ingredients[index].keys.first)
+                  Image.asset(food.ingredients![index].values.first,width: 52,),
+                  Text(food.ingredients![index].keys.first)
                 ],
               ),
             ), 
             separatorBuilder: (_,index)=> SizedBox(width: 15,), 
-            itemCount: food.ingredients.length),
+            itemCount: food.ingredients!.length),
         ),
         SizedBox(height: 30,),
         Row(children: [
@@ -90,7 +90,7 @@ class FoodDetail extends StatelessWidget {
         ],),
         SizedBox(height: 30,),
         Text(
-          food.about,
+          food.about!,
           style: TextStyle(
             wordSpacing: 1.2,
             height: 1.5,

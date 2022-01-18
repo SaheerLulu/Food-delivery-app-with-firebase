@@ -4,10 +4,14 @@ import 'dart:io';
 import 'package:flutter_application_1/models/food.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FoodImgPicker extends StatefulWidget {
-  final Food food;
+typedef void image_callback(File image_file);
 
-  FoodImgPicker(this.food);
+class FoodImgPicker extends StatefulWidget {
+  
+ final image_callback image_changed;
+
+ const FoodImgPicker({ Key? key ,required this.image_changed}) : super(key: key);
+ 
 
   @override
   State<FoodImgPicker> createState() => _FoodImgPickerState();
@@ -15,6 +19,7 @@ class FoodImgPicker extends StatefulWidget {
 
 class _FoodImgPickerState extends State<FoodImgPicker> {
   ImagePicker picker = ImagePicker();
+  
 
   ImageProvider _image = AssetImage("assets/images/dish1.png");
 
@@ -54,8 +59,11 @@ class _FoodImgPickerState extends State<FoodImgPicker> {
                 setState(() {
                   if (image == null) {
                     _image = AssetImage("assets/images/dish1.png");
+                   
                   } else {
                     _image = FileImage(File(image.path));
+                    this.widget.image_changed(File(image.path));
+                    print(image.path);
                   }
                 });
               },
